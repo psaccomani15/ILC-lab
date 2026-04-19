@@ -10,11 +10,6 @@
 import ND.Basic
 
 namespace ND
-
-abbrev p : Form := Form.var 0
-abbrev q : Form := Form.var 1
-abbrev r : Form := Form.var 2
-
 open Proof
 open Notation
 theorem exercicio_prova : Proof [] (((p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r))) ⇒ ((p ∨ q) ∧ r))  := by
@@ -35,4 +30,15 @@ theorem exercicio_prova : Proof [] (((p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r))) �
     · apply Proof.andEe (φ := p)
       apply Proof.hyp
       simp
+
+theorem exercicio_prova' (p q r: Prop): (p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r)) → (p ∨ q)  ∧ r := by
+  intro h             -- impI
+  constructor         -- andI
+  · exact h.left      -- andEd
+  · have h' := h.right
+    apply Or.elim h'  -- orE
+    · intro hpr       -- impI
+      exact hpr.right -- andEe
+    · intro hpr       -- impI
+      exact hpr.right -- andEe
 end ND

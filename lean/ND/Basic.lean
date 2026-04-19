@@ -87,7 +87,11 @@ example : Proof [] ((p ∧ q) ⇒ p) := by
   apply impI
   apply andEd (ψ := q)
   apply hyp
-  apply List.Mem.head
+  simp
+
+example (a b : Prop) : a ∧ b → a := by
+  intro h
+  exact h.left
 
 example : Proof [] ((p ⇒ (q ∧ r)) ⇒ ((p ⇒ q) ∧ (p ⇒ r))) := by
   apply impI
@@ -107,6 +111,14 @@ example : Proof [] ((p ⇒ (q ∧ r)) ⇒ ((p ⇒ q) ∧ (p ⇒ r))) := by
     · apply hyp
       simp
 
+example (p q r : Prop) : (p → (q ∧ r)) → ((p → q) ∧ (p → r)) := by
+  intro h              -- impI
+  constructor          -- andI
+  · intro hp           -- impI
+    exact (h hp).left  -- impE, andEd
+  · intro hp           -- impI
+    exact (h hp).right -- impE, andEe
+
 example : Proof [] ((p ⇒ q) ⇒ (p ⇒ (q ∨ r))) := by
   apply impI
   apply impI
@@ -116,6 +128,12 @@ example : Proof [] ((p ⇒ q) ⇒ (p ⇒ (q ∨ r))) := by
     simp
   · apply hyp
     simp
+
+example (p q r: Prop) : (p → q) → (p → (q ∨ r)) := by
+  intro h       -- impI
+  intro hp      -- impI
+  apply Or.inl  -- orId
+  exact h hp    -- impE
 
 example : Proof [] ((p ∧ q) ∨ (p ∧ r) ⇒ p) := by
   apply impI
@@ -129,4 +147,11 @@ example : Proof [] ((p ∧ q) ∨ (p ∧ r) ⇒ p) := by
     apply hyp
     simp
 
+example (p q r: Prop): (p ∧ q) ∨ (p ∧ r) → p := by
+  intro h         -- impI
+  apply Or.elim h -- orE
+  · intro hpq
+    exact hpq.left -- andEd
+  · intro hpr
+    exact hpr.left -- andEd
 end ND
