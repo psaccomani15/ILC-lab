@@ -38,10 +38,6 @@ namespace Notation
   scoped infixr:25 " ⇒ " => Form.imp
   scoped prefix:max "¬" => Form.neg
   scoped notation "⊥ₚ"    => Form.bot
-
-  scoped notation "p" => Form.var 0
-  scoped notation "q" => Form.var 1
-  scoped notation "r" => Form.var 2
 end Notation
 
 open Notation
@@ -81,6 +77,12 @@ inductive Proof : List Form → Form → Prop
 
 /-! ## Primeiro exemplo da aula: ⊢ (φ ⋀ ψ) → φ -/
 open Proof
+
+abbrev p : Form := Form.var 0
+abbrev q : Form := Form.var 1
+abbrev r : Form := Form.var 2
+
+
 example : Proof [] ((p ∧ q) ⇒ p) := by
   apply impI
   apply andEd (ψ := q)
