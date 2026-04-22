@@ -11,7 +11,7 @@
  *   (diag. ↖)   col[i] + i distintos (i.e., col[i] - col[j] != j - i)
  *
  * Uma rainha por linha é garantida por construção (uma variável por linha).
- * O encoding usa teoria de aritmética linear inteira (LIA) -- fora de SAT puro.
+ * O encoding usa teoria de aritmética linear inteira (LIA).
  *
  * Compilar: gcc nqueens_int.c -lcvc5 -o nqueens_int
  */
@@ -21,12 +21,13 @@
 #include <stdbool.h>
 
 #ifndef N
-#define N 12
+#define N 8
 #endif
 
 int main(void) {
     Cvc5TermManager *tm = cvc5_term_manager_new();
     Cvc5 *slv           = cvc5_new(tm);
+    /* Aritmética linear sobre inteiros */
     cvc5_set_logic(slv, "QF_LIA");
     cvc5_set_option(slv, "produce-models", "true");
 
@@ -35,11 +36,11 @@ int main(void) {
     Cvc5Term zero  = cvc5_mk_integer_int64(tm, 0);
     Cvc5Term n_val = cvc5_mk_integer_int64(tm, N);
 
-    char name[16];
+    char name[64];
     for (int i = 0; i < N; i++) {
         snprintf(name, sizeof(name), "col_%d", i);
         col[i] = cvc5_mk_const(tm, int_sort, name);
-
+        /* Restrições no Dominío */
         cvc5_assert_formula(slv, cvc5_mk_term(tm, CVC5_KIND_LEQ, 2, (Cvc5Term[]){zero, col[i]}));
         cvc5_assert_formula(slv, cvc5_mk_term(tm, CVC5_KIND_LT,  2, (Cvc5Term[]){col[i], n_val}));
     }

@@ -29,7 +29,8 @@ int main(void) {
     Cvc5Sort bool_sort = cvc5_get_boolean_sort(tm);
     Cvc5Term p[N][N];
 
-    char name[32];
+    /* Variáveis para representar as restrições. */
+    char name[128];
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
             snprintf(name, sizeof(name), "p_%d_%d", i, j);

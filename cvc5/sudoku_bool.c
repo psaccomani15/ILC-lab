@@ -7,10 +7,7 @@
  *   - Cada linha  tem cada valor ao menos uma vez (consequentemente, exatamente).
  *   - Cada coluna tem cada valor ao menos uma vez.
  *   - Cada bloco  tem cada valor ao menos uma vez.
- *   - Pistas fixam x[i][j][v] quando o puzzle tem v+1 na célula (i,j).
- *
- * Fora do domínio SAT-puro, a codificação inteira (sudoku_int.c) é ordens
- * de grandeza menor. Este arquivo existe para contrastar as duas codificações.
+ *   - Pistas fixam x[i][j][v] quando o puzzle tem v+1 na célula (i,
  *
  * Compilar: gcc sudoku_bool.c -lcvc5 -o sudoku_bool
  */
