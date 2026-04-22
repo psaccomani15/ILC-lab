@@ -12,7 +12,6 @@
     andEe (elim esquerda -- dá o operando direito),
     orId, orIe, orE, impI, impE, notI, notE, absurd (red. ao absurdo).
 -/
-
 namespace ND
 
 /-! ## Fórmulas -/
@@ -47,7 +46,6 @@ open Notation
 `Proof Γ φ` significa "a partir do contexto Γ, deriva-se φ".
 Cada construtor corresponde a uma regra de inferência nos slides.
 -/
-
 inductive Proof : List Form → Form → Prop
   -- Usar uma hipótese do contexto.
   | hyp    {Γ φ}     : φ ∈ Γ → Proof Γ φ
@@ -74,14 +72,12 @@ inductive Proof : List Form → Form → Prop
   | notE   {Γ φ}     : Proof Γ (¬ φ) → Proof Γ φ → Proof Γ ⊥ₚ
   | absurd {Γ φ}     : Proof ((¬ φ) :: Γ) ⊥ₚ → Proof Γ φ
 
-
 /-! ## Primeiro exemplo da aula: ⊢ (φ ⋀ ψ) → φ -/
 open Proof
 
 abbrev p : Form := Form.var 0
 abbrev q : Form := Form.var 1
 abbrev r : Form := Form.var 2
-
 
 example : Proof [] ((p ∧ q) ⇒ p) := by
   apply impI
@@ -90,8 +86,8 @@ example : Proof [] ((p ∧ q) ⇒ p) := by
   simp
 
 example (a b : Prop) : a ∧ b → a := by
-  intro h
-  exact h.left
+  intro h      --  impI
+  exact h.left -- andEd, Hyp
 
 example : Proof [] ((p ⇒ (q ∧ r)) ⇒ ((p ⇒ q) ∧ (p ⇒ r))) := by
   apply impI
@@ -154,4 +150,5 @@ example (p q r: Prop): (p ∧ q) ∨ (p ∧ r) → p := by
     exact hpq.left -- andEd
   · intro hpr
     exact hpr.left -- andEd
+
 end ND

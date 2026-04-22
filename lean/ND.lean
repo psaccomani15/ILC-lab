@@ -4,4 +4,3 @@
 
 import ND.Basic
 import ND.Exercicio
-import ND.Automacao

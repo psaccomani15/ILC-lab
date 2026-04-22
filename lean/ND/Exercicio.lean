@@ -12,6 +12,8 @@ import ND.Basic
 namespace ND
 open Proof
 open Notation
+
+@[simp]
 theorem exercicio_prova : Proof [] (((p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r))) ⇒ ((p ∨ q) ∧ r))  := by
   apply Proof.impI
   apply Proof.andI
@@ -30,6 +32,9 @@ theorem exercicio_prova : Proof [] (((p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r))) �
     · apply Proof.andEe (φ := p)
       apply Proof.hyp
       simp
+
+example : Proof [] (((p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r))) ⇒ ((p ∨ q) ∧ r)) := by
+  simp
 
 theorem exercicio_prova' (p q r: Prop): (p ∨ q) ∧ ((p ∧ r) ∨ (p ∧ r)) → (p ∨ q)  ∧ r := by
   intro h             -- impI

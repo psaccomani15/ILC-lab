@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 #ifndef N
-#define N 8
+#define N 12
 #endif
 
 int main(void) {

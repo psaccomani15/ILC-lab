@@ -18,10 +18,11 @@ int main(void) {
     Cvc5Term x         = cvc5_mk_const(tm, bool_sort, "x");
 
     Cvc5Term not_x   = cvc5_mk_term(tm, CVC5_KIND_NOT, 1, (Cvc5Term[]){x});
+    // not x <- aceita só um termo
     Cvc5Term formula = cvc5_mk_term(tm, CVC5_KIND_AND, 2, (Cvc5Term[]){x, not_x});
-
+    // AND ... <- aceita n >= 2 termos.
+    //  x e y e z := AND x y z.
     cvc5_assert_formula(slv, formula);
-
     Cvc5Result r = cvc5_check_sat(slv);
     printf("fórmula : (x AND NOT x)\n");
     printf("esperado: unsat\n");
